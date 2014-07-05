@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- Reuse complied SQL -->
+	<settings>
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+
+	<!-- Type alias -->
+	<typeAliases>
+		<typeAlias alias="User" type="org.mybatis.pojo.User" />
+		<typeAlias alias="Role" type="org.mybatis.pojo.Role" />
+	</typeAliases>
+
+	<!-- Database environment information -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="jdbc" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/test" />
+				<property name="username" value="root" />
+				<property name="password" value="2426" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="org/mybatis/pojo/mapper/UserMapper.xml" />
+		<mapper resource="org/mybatis/pojo/mapper/RoleMapper.xml" />
+	</mappers>
+</configuration>

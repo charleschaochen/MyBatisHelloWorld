@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.pojo.mapper.UserMapper">
+	<resultMap id="userResultMap" type="User">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="passwd" column="passwd" />
+
+		<!-- Nested Result Map Association -->
+		<association property="role" column="role_id"
+			javaType="org.mybatis.pojo.Role">
+			<id property="id" column="id" />
+			<result property="name" column="role_name" />
+			<result property="level" column="role_level" />
+		</association>
+
+		<!-- Nested Select Association -->
+		<!--<association property="role" column="role_id" javaType="org.mybatis.pojo.Role"
+			select="org.mybatis.pojo.mapper.RoleMapper.getRoleById" /> -->
+	</resultMap>
+	<select id="findById" parameterType="int"
+		resultMap="userResultMap">
+		select id, name, passwd, role_id from user where id = #{id}
+	</select>
+	<select id="findAllUsers" parameterType="int"
+		resultMap="userResultMap">
+		select id, name, passwd, role_id from user
+	</select>
+	<insert id="add" parameterType="User" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into user(name, passwd, role_id) values(#{name},
+		#{passwd}, #{role.id})
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+	<update id="update" parameterType="User">
+		Update user set name = #{name}, passwd = #{passwd} where role_id =
+		#{role.id}
+	</update>
+</mapper>
